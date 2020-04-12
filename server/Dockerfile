@@ -2,13 +2,15 @@ FROM python:3.7-alpine
 
 LABEL maintainer="Peter Swanson | pswanson@ucdavis.edu"
 
-COPY ./requirements.txt /app/requirements.txt
-
 WORKDIR /app
-
-RUN pip install -r requirements.txt
-
 COPY . /app
+
+ENV FLASK_APP app/main.py
+ENV FLASK_RUN_HOST 0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
 
 ENTRYPOINT [ "python" ]
 

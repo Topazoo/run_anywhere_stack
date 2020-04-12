@@ -36,6 +36,11 @@ class Interface:
                 'default': False,
                 'logic': self.kill
             },
+            '--force_kill': {
+                'action': 'store_true',
+                'default': False,
+                'logic': self.force_kill
+            },
         }
         self.parser = argparse.ArgumentParser(description='Utilities for managing the server')
         self.add_command_line_args()
@@ -44,14 +49,14 @@ class Interface:
     def build(self):
         ''' Build the application [./manage.py --build] '''
 
-        os.system('docker build -t server:latest .')
+        os.system('docker-compose build --no-cache')
 
 
     def run(self):
         ''' Run the application [./manage.py --run] '''
 
         try:
-            container = subprocess.check_output('docker run -d -p 5000:5000 server'.split()).decode()
+            container = subprocess.check_output('docker-compose up --force-recreate'.split()).decode()
             container.replace('\n', '')
 
             print(f'Started application [{container[:12]}]')
@@ -69,8 +74,14 @@ class Interface:
     def kill(self):
         ''' Kill a running application [./manage.py --kill] '''
 
+        subprocess.check_output('docker-compose down'.split())
+
+
+    def force_kill(self):
+        ''' Force kill a running application [./manage.py --kill] '''
+
         for container in self._get_running_containers():
-            os.system('docker kill ' + container[0])
+            subprocess.check_output(('docker kill ' + container[0]).split())
             print('Killed ' + container[0])
 
 
@@ -87,6 +98,7 @@ class Interface:
         for arg,val in vars(self.parser.parse_args()).items():
             if val: self.UTILITIES["--"+arg]['logic']()
 
+
     def _get_running_containers(self) -> list:
         ''' Get running containers '''
 
@@ -101,4 +113,7 @@ class Interface:
 
 
 if __name__ == '__main__':
-    Interface().parse_args()
+    try:
+        Interface().parse_args()
+    except KeyboardInterrupt:
+        Interface().kill()
