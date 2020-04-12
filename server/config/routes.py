@@ -1,5 +1,4 @@
-def hello_world(): # TODO - Refactor to views
-    return 'Hello World'
+from routes.index import serve_index
 
 ROUTES = {
     'index': {
@@ -7,6 +6,6 @@ ROUTES = {
         'methods': ['GET'],
         'template': None,
         'defaults': None,
-        'logic': hello_world
+        'logic': serve_index
     }
 }
