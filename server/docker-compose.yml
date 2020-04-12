@@ -17,3 +17,5 @@ services:
     image: mongo:4.0.8
     container_name: mongodb
     restart: unless-stopped
+    logging: 
+      driver: none

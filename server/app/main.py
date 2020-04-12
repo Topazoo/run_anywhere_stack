@@ -1,6 +1,7 @@
 
 from flask import Flask 
 from router import Router
+import os
   
 class Application:
     ''' Main application driver '''
@@ -11,8 +12,6 @@ class Application:
         # Create Flask application
         self.app = Flask(__name__) 
 
-        self.app.config['TESTING'] = debug
-
         # Register routes from config/routes.py
         Router.register_routes(self.app) 
 
@@ -20,7 +19,7 @@ class Application:
     def run(self):
         ''' Run the server '''
 
-        self.app.run()
+        self.app.run(host=os.environ.get('FLASK_RUN_HOST', '127.0.0.1'), debug=(os.environ.get('APP_DEBUG') == 'True'))
 
 
 if __name__ == '__main__': 

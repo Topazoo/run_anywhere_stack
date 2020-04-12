@@ -56,10 +56,7 @@ class Interface:
         ''' Run the application [./manage.py --run] '''
 
         try:
-            container = subprocess.check_output('docker-compose up --force-recreate'.split()).decode()
-            container.replace('\n', '')
-
-            print(f'Started application [{container[:12]}]')
+            os.system('docker-compose up --force-recreate')
 
         except Exception:
             print('Failed to start application - Is the server already running?')
