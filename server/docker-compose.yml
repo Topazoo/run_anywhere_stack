@@ -10,6 +10,8 @@ services:
       APP_DEBUG: "True"
       APP_PORT: 5000
       MONGODB_HOSTNAME: mongodb
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
     depends_on:
       - mongodb
 

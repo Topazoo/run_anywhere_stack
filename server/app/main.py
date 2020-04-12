@@ -19,7 +19,7 @@ class Application:
     def run(self):
         ''' Run the server '''
 
-        self.app.run(host=os.environ.get('FLASK_RUN_HOST', '127.0.0.1'), debug=(os.environ.get('APP_DEBUG') == 'True'))
+        self.app.run(host=os.environ.get('FLASK_RUN_HOST', '0.0.0.0'), debug=(os.environ.get('APP_DEBUG') == 'True'))
 
 
 if __name__ == '__main__': 
