@@ -8,7 +8,7 @@ Backend:
 
 - Docker [Compose]
 - Python 3.7 [Flask]
-- TODO: MongoDB
+- MongoDB
 - TODO: Kafka
 - TODO: Redis
 

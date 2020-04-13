@@ -44,7 +44,7 @@ class Database:
             self.CONNECTION = None
 
 
-    def __enter__(self):
+    def __enter__(self) -> Collection:
        return self.connect()
        
     def __exit__(self, exception_type, exception_value, traceback):
