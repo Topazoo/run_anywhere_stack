@@ -8,6 +8,8 @@ import json
 class API:
     ''' API interface '''
 
+    
+
     @staticmethod
     def GET(request:Request, database:str=None, collection:str=None) -> Response:
         ''' Fetch model data from the server or respond with the appropriate HTTP status code on error. 

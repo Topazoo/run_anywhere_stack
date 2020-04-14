@@ -7,6 +7,7 @@ COPY . /app
 
 ENV FLASK_APP app/main.py
 ENV FLASK_RUN_HOST 0.0.0.0
+ENV FLASK_ENV development
 RUN apk add --no-cache gcc musl-dev linux-headers
 
 COPY ./requirements.txt /app/requirements.txt

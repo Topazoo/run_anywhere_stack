@@ -21,3 +21,15 @@ services:
     restart: unless-stopped
     logging: 
       driver: none
+
+  rabbitmq:
+    image: rabbitmq:latest
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: mypass
+      RABBITMQ_HOSTNAME: rabbitmq
+    ports:
+        - "5673:5672"
+    logging: 
+      driver: none

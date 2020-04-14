@@ -1,4 +1,3 @@
-from config.routes import ROUTES
 from api.main import API
 
 from flask import Blueprint, render_template
@@ -11,12 +10,12 @@ class Router:
     ''' Module allowing route specification as a list of dictionaries in config/routes.py'''
 
     @staticmethod
-    def register_routes(app):   
+    def register_routes(app, routes:dict):   
         ''' Register all routes in config/routes.py '''
 
-        for route in ROUTES:
-            blueprint = Router.dict_to_blueprint(ROUTES[route]['name'], ROUTES[route])
-            Router.configure_blueprint(route, ROUTES[route]['name'], ROUTES[route], blueprint)
+        for route in routes:
+            blueprint = Router.dict_to_blueprint(routes[route]['name'], routes[route])
+            Router.configure_blueprint(route, routes[route]['name'], routes[route], blueprint)
             app.register_blueprint(blueprint)
 
 
