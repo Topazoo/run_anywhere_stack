@@ -13,6 +13,7 @@ class Router:
     def register_routes(app, routes:dict):   
         ''' Register all routes in config/routes.py '''
 
+        API.ROUTES = routes
         for route in routes:
             blueprint = Router.dict_to_blueprint(routes[route]['name'], routes[route])
             Router.configure_blueprint(route, routes[route]['name'], routes[route], blueprint)

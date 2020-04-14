@@ -5,7 +5,7 @@ LABEL maintainer="Peter Swanson | pswanson@ucdavis.edu"
 WORKDIR /app
 COPY . /app
 
-ENV FLASK_APP app/main.py
+ENV FLASK_APP app/server_demo.py
 ENV FLASK_RUN_HOST 0.0.0.0
 ENV FLASK_ENV development
 RUN apk add --no-cache gcc musl-dev linux-headers
@@ -15,4 +15,4 @@ RUN pip install -r requirements.txt
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "app/main.py" ]
+CMD [ "server_demo.py" ]

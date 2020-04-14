@@ -3,7 +3,7 @@
 from main import Application
 
 ROUTES = {
-    '/': {
+    '/demo': {
         'name': 'demo',
         'methods': ['GET', 'POST', 'DELETE', 'PUT'],
         'template': None,

@@ -1,5 +1,4 @@
 from database.main import Database
-from config.routes import ROUTES
 from api.errors import API_Error
 from flask import jsonify, request, Request, Response
 from api.utils import *
@@ -8,8 +7,8 @@ import json
 class API:
     ''' API interface '''
 
+    ROUTES = {}
     
-
     @staticmethod
     def GET(request:Request, database:str=None, collection:str=None) -> Response:
         ''' Fetch model data from the server or respond with the appropriate HTTP status code on error. 
@@ -80,11 +79,7 @@ class API:
         ''' Update a MongoDB record or respond with the appropriate HTTP status code on error. 
             
             The request body must supply a dictionary of 
-            one or more field/value pairs to update the model with. It should also supply 
-            one or more optional filter parameters matching the parameters for Django's 
-            Queryset.filter() method. 
-            
-            *The filter parameters must match only the model being updated*
+            one or more field/value pairs to update the record with, along with the ID of the record to update
             
             --> request : The PUT request sent to the server.
             <-- JSON containing the HTTP status code signifying the request's success or failure.
@@ -115,7 +110,7 @@ class API:
     def DELETE(request:Request, database:str=None, collection:str=None) -> Response:
         ''' Delete a MongoDB record or respond with the appropriate HTTP status code on error. 
             
-            The request body must supply filter parameters.
+            The request body must supply the ID of the record to delete
             *The filter parameters must match only a single model*
             
             --> request : The DELETE request sent to the server.
@@ -141,8 +136,8 @@ class API:
             return JsonError('DELETE', exception)
 
 
-    @staticmethod
-    def main() -> Response:
+    @classmethod
+    def main(cls) -> Response:
         ''' Called when the /api/ endpoint is sent an HTTP request. Delegates 
             to the appropriate handler based on the request method or returns a JSON
             formatted error if the method is not supported.
@@ -151,7 +146,7 @@ class API:
                 all other data returned from the server.
         '''
 
-        route_config = ROUTES[str(request.url_rule)]
+        route_config = cls.ROUTES[str(request.url_rule)]
         database = route_config.get('database')
         collection = route_config.get('collection')
         delegate = route_config.get('logic')
