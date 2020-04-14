@@ -2,15 +2,12 @@
 
 ## Overview:
 
-A dead simple stack for web applications:
+A dead simple Dockerized stack for web applications:
 
 Backend:
 
-- Docker [Compose]
-- Python 3.7 [Flask]
-- MongoDB
-- TODO: Kafka
-- TODO: Redis
+[dead_simple_framework](https://github.com/Topazoo/dead_simple_framework): Flask + MongoDB
+
 
 Frontend:
 
