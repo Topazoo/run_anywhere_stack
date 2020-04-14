@@ -1,3 +1,1 @@
-Flask==1.1.2
-pymongo==3.10.1
-celery==4.2.1
+dead-simple-framework>=0.0.4

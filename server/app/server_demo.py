@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.7
 
-from main import Application
+from dead_simple_framework import Application
 
 ROUTES = {
     '/demo': {
