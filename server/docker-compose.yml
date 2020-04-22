@@ -11,10 +11,15 @@ services:
       MONGODB_HOSTNAME: mongodb
       MONGODB_DEFAULT_DB: db
       MONGODB_DEFAULT_COLLECTION: records
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
     depends_on:
       - mongodb
+      - celery
+      - rabbitmq
     volumes: ['./app:/app']
-
 
   mongodb:
     image: mongo:4.0.8
@@ -26,11 +31,18 @@ services:
   rabbitmq:
     image: rabbitmq:latest
     restart: unless-stopped
+  
+  celery:
+    build: .
+    user: nobody
     environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: mypass
-      RABBITMQ_HOSTNAME: rabbitmq
-    ports:
-        - "5673:5672"
-    logging: 
-      driver: none
+      CELERY_APP_NAME: server_demo
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+    command: celery worker -l info -A app.server_demo --concurrency=2
+    depends_on:
+      - rabbitmq
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"

@@ -6,7 +6,7 @@ A dead simple Dockerized stack for web applications:
 
 Backend:
 
-[dead_simple_framework](https://github.com/Topazoo/dead_simple_framework): Flask + MongoDB
+[dead_simple_framework](https://github.com/Topazoo/dead_simple_framework): Flask + MongoDB + Celery + Docker
 
 
 Frontend:

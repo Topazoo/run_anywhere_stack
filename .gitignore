@@ -2,3 +2,4 @@ server/venv/
 .vscode/
 *.pyc
 .DS_Store
+celerybeat-schedule
