@@ -27,4 +27,3 @@ git clone https://github.com/Topazoo/web-stack.git
 $ cd web-stack
 $ docker-compose up --force-recreate
 ```
-s
