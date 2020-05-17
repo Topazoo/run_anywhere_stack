@@ -1,4 +1,4 @@
-# Server Build
+# Scheduler Build
 FROM python:3.7-alpine
 LABEL maintainer="Peter Swanson | pswanson@ucdavis.edu"
 

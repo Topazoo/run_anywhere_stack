@@ -1,0 +1,60 @@
+version: '3'
+services:
+  client:
+    restart: unless-stopped
+    build:
+        context: ./client
+    volumes: ['./client/app:/app']
+
+  server:
+    restart: unless-stopped
+    build:
+      context: ./server
+    ports:
+      - "5000:5000"
+    environment:
+      APP_ENV: "development"
+      APP_PORT: 5000
+      MONGODB_HOSTNAME: mongodb
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+    depends_on:
+      - mongodb
+      - scheduler
+      - rabbitmq
+    volumes: ['./server/app:/app']
+  
+  scheduler:
+    build:
+      context: ./scheduler
+    user: nobody
+    environment:
+      MONGODB_HOSTNAME: mongodb
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
+      CELERY_APP_NAME: server_demo
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+    command: celery worker -B -s /tmp/celerybeat-schedule -l info -A app.server_demo --concurrency=2
+    depends_on:
+      - rabbitmq
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
+
+  mongodb:
+    image: mongo:4.0.8
+    container_name: mongodb
+    restart: unless-stopped
+    logging: 
+      driver: none
+    
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    restart: unless-stopped
