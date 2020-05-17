@@ -21,24 +21,10 @@ Frontend:
 git clone https://github.com/Topazoo/web-stack.git
 ```
 
-2. Build the app:
+2. Run the server, client and job scheduler:
 
 ```sh
-cd web-stack/server
-./manage.py --build
+$ cd web-stack
+$ docker-compose up --force-recreate
 ```
-
-3. Run the app:
-
-```sh
-./manage.py --run
-server_1   |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-```
-
-4. Manage the app:
-
-```sh
-./manage.py --status     | View running instances
-./manage.py --kill       | Kill running instances
-./manage.py --force_kill | Force kill running instances
-```
+s
