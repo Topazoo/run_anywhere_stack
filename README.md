@@ -2,7 +2,7 @@
 
 ## Overview:
 
-A dead simple Dockerized stack for web applications:
+A dead simple Dockerized stack for web and native mobile applications:
 
 Backend:
 
@@ -11,9 +11,9 @@ Backend:
 
 Frontend:
 
-- TODO: Flutter Client/Components [Web+Mobile]
+[flutter_web_frontend](https://github.com/Topazoo/flutter_web_frontend) : Web + iOS Native + Android Native
 
-## Running the Server:
+## Running the application client and server:
 
 1. Pull the code:
 
