@@ -1,10 +1,14 @@
 version: '3'
 services:
   client:
-    restart: unless-stopped
-    build:
-        context: ./client
+    restart: always
+    build: ./client
     volumes: ['./client/app:/app']
+    ports:
+      - "8080:80"
+      - "443:443"
+    networks:
+      - frontend_bridge
 
   server:
     restart: unless-stopped
@@ -58,3 +62,7 @@ services:
     container_name: rabbitmq
     image: rabbitmq:latest
     restart: unless-stopped
+
+networks:
+  frontend_bridge:
+    driver: bridge
