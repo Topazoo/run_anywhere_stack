@@ -12,6 +12,6 @@ ENV FLASK_ENV development
 RUN apk add --no-cache gcc musl-dev linux-headers
 
 COPY ./requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache -r requirements.txt
 
 CMD [ "python", "server_demo.py" ]

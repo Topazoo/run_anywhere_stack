@@ -34,7 +34,7 @@ services:
   
   scheduler:
     build:
-      context: ./scheduler
+      context: ./server
     user: nobody
     environment:
       MONGODB_HOSTNAME: mongodb

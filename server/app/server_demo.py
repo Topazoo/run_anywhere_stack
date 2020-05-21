@@ -1,43 +1,50 @@
-from dead_simple_framework import Application, Task_Manager, Database
+import json
+from dead_simple_framework import Application, Task_Manager, Database, API
+
+# A sample backend specified as a dictionary
+
+def run_calls():
+    res = {}
+    for x in range(55, 65):
+        call = Task_Manager.run_task('call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}])
+        if call:
+            res[call['item']['name']] = call
+
+    return res
 
 sample_config = {
     'routes': {
-        '/demo': {
-            'name': 'demo',
-            'methods': ['GET', 'POST', 'DELETE', 'PUT'],
-            'template': None,
-            'defaults': None,
-            'logic': None,
-            'collection': 'demo'
-        },
-        '/': {
-            'name': 'index',
-            'methods': ['GET'],
-            'template': None,
-            'defaults': None,
-            'logic': lambda: str(Task_Manager.run_task('add', [5, 8], kwargs={})),
-        },
-        '/insert': {
+        '/insert': { # Another route with automatic CRUD support
             'name': 'insert',
             'methods': ['GET', 'POST', 'DELETE', 'PUT'],
             'template': None,
             'defaults': None,
             'logic': None,
             'collection': 'insert'
-        }
+        },
+        '/': {  # Route that runs an async task (API call)
+            'name': 'call',
+            'methods': ['GET'],
+            'template': None,
+            'defaults': None,
+            'logic': run_calls
+        },
     },
-    'tasks': {
-        'add': {
+    'tasks': { # Async tasks available to the Task_Manager [celery] to schedule or run
+        'add': {        # Simple Addition Task (with default arguments) 
             'logic': lambda x,y: x + y,
             'schedule': None,
             'timeframe': None,
             'args': (2,2)
         },
-        'insert': {
+        'insert': {     # Periodic Database Insert Task 
             'logic': lambda res: Database(collection='insert').connect().insert_one({'test': 'doc', 'result': res}),
             'schedule': {}, # Default - every minute
             'timeframe': None,
             'depends_on': 'add' # Return value substituted for `res`
+        },
+        'call_api': {   # API Call Task
+            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True)
         }
     }
 }
