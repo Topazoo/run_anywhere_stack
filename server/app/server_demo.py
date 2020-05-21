@@ -1,16 +1,17 @@
 import json
 from dead_simple_framework import Application, Task_Manager, Database, API
+from flask import jsonify
 
 # A sample backend specified as a dictionary
 
 def run_calls():
-    res = {}
+    res = {'items': []}
     for x in range(55, 65):
         call = Task_Manager.run_task('call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}])
         if call:
-            res[call['item']['name']] = call
+            res['items'].append(call)
 
-    return res
+    return jsonify(res)
 
 sample_config = {
     'routes': {
