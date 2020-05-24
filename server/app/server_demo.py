@@ -2,8 +2,6 @@ import json
 from dead_simple_framework import Application, Task_Manager, Database, API
 from flask import jsonify
 
-# A sample backend specified as a dictionary
-
 def run_calls():
     res = {'items': []}
     for x in range(55, 65):

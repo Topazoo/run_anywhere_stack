@@ -26,10 +26,12 @@ services:
       RABBITMQ_USERNAME: guest
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
+      REDIS_HOST: redis
     depends_on:
       - mongodb
       - scheduler
       - rabbitmq
+      - redis
     volumes: ['./server/app:/app']
   
   scheduler:
@@ -45,9 +47,11 @@ services:
       RABBITMQ_USERNAME: guest
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
+      REDIS_HOST: redis
     command: celery worker -B -s /tmp/celerybeat-schedule -l info -A app.server_demo --concurrency=2
     depends_on:
       - rabbitmq
+      - redis
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
     stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
 
@@ -61,6 +65,11 @@ services:
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:latest
+    restart: unless-stopped
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
     restart: unless-stopped
 
 networks:
