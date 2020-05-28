@@ -1,6 +1,4 @@
-import json
 from dead_simple_framework import Application, Task_Manager, Database, API
-from flask import jsonify
 
 def run_calls():
     res = {'items': []}
@@ -9,7 +7,7 @@ def run_calls():
         if call:
             res['items'].append(call)
 
-    return jsonify(res)
+    return res
 
 sample_config = {
     'routes': {
@@ -28,6 +26,13 @@ sample_config = {
             'defaults': None,
             'logic': run_calls
         },
+        '/api/fetch': {  # Route that fetches the last result of an async task (API call)
+            'name': 'call_cached',
+            'methods': ['GET'],
+            'template': None,
+            'defaults': None,
+            'logic': lambda: Task_Manager.get_result('scheduled_call')
+        },
     },
     'tasks': { # Async tasks available to the Task_Manager [celery] to schedule or run
         'add': {        # Simple Addition Task (with default arguments) 
@@ -44,6 +49,10 @@ sample_config = {
         },
         'call_api': {   # API Call Task
             'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True)
+        },
+        'scheduled_call': {
+            'logic': lambda: run_calls(),
+            'schedule': {}
         }
     }
 }

@@ -61,7 +61,7 @@ services:
     restart: unless-stopped
     logging: 
       driver: none
-    
+      
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:latest

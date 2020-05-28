@@ -34,6 +34,7 @@ $ docker-compose up --force-recreate
   - Runs a chain of celery tasks (simple addition then a MongoDB insert to the `insert` collection every 60 seconds)
   - Supports CRUD operations [GET, POST, PUT, DELETE] on `/demo` and `/insert`
   - Fires a Celery task on `/`
+  - Returns a cached task result on `/api/fetch`
 
 - A fully platform-agnostic [frontend](https://github.com/Topazoo/flexible_frontend/blob/master/app/lib/main.dart) that:
   - Calls `/insert` to retreive the data in the `insert` collection and renders in a scrollable list
