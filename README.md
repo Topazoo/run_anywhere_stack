@@ -21,10 +21,16 @@ Frontend:
 git clone https://github.com/Topazoo/run_anywhere_stack.git
 ```
 
-2. Run the server, client and job scheduler:
+2. Build the server, client and job scheduler:
 
 ```sh
-$ cd web-stack
+$ cd run_anywhere_stack
+$ docker-compose build --no-cache
+```
+
+3. Run the server, client and job scheduler:
+
+```sh
 $ docker-compose up --force-recreate
 ```
 
