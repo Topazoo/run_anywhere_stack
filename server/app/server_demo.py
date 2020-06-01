@@ -1,11 +1,15 @@
 from dead_simple_framework import Application, Task_Manager, Database, API
 
+from time import sleep
+
 def run_calls():
     res = {'items': []}
-    for x in range(55, 65):
+    for x in range(0, 500):
         call = Task_Manager.run_task('call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}])
         if call:
             res['items'].append(call)
+
+        sleep(2)
 
     return res
 
@@ -19,14 +23,14 @@ sample_config = {
             'logic': None,
             'collection': 'insert'
         },
-        '/': {  # Route that runs an async task (API call)
+        '/api/refresh': {  # Route that runs an async task (API call)
             'name': 'call',
             'methods': ['GET'],
             'template': None,
             'defaults': None,
-            'logic': run_calls
+            'logic': lambda: str(Task_Manager.run_task('scheduled_call')),
         },
-        '/api/fetch': {  # Route that fetches the last result of an async task (API call)
+        '/': {  # Route that fetches the last result of an async task (API call)
             'name': 'call_cached',
             'methods': ['GET'],
             'template': None,
@@ -48,11 +52,11 @@ sample_config = {
             'depends_on': 'add' # Return value substituted for `res`
         },
         'call_api': {   # API Call Task
-            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True)
+            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True, retry_ms=3000, num_retries=5),
         },
         'scheduled_call': {
             'logic': lambda: run_calls(),
-            'schedule': {}
+            'schedule': {'hour': 1}
         }
     }
 }
