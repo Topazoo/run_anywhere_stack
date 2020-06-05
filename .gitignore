@@ -3,3 +3,4 @@ server/venv/
 *.pyc
 .DS_Store
 celerybeat-schedule
+dump.rdb

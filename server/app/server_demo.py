@@ -1,18 +1,5 @@
 from dead_simple_framework import Application, Task_Manager, Database, API
 
-from time import sleep
-
-def run_calls():
-    res = {'items': []}
-    for x in range(0, 500):
-        call = Task_Manager.run_task('call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}])
-        if call:
-            res['items'].append(call)
-
-        sleep(2)
-
-    return res
-
 sample_config = {
     'routes': {
         '/insert': { # Another route with automatic CRUD support
@@ -28,14 +15,21 @@ sample_config = {
             'methods': ['GET'],
             'template': None,
             'defaults': None,
-            'logic': lambda: str(Task_Manager.run_task('scheduled_call')),
+            'logic': lambda: str(Task_Manager.parallelize([['call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}]] for x in range(1000)], cache_as='scheduled_call')),
         },
         '/': {  # Route that fetches the last result of an async task (API call)
             'name': 'call_cached',
             'methods': ['GET'],
             'template': None,
             'defaults': None,
-            'logic': lambda: Task_Manager.get_result('scheduled_call')
+            'logic': lambda: str(Task_Manager.get_result('scheduled_call'))
+        },
+        '/add': {  # Route that fetches the last result of an async task (API call)
+            'name': 'add',
+            'methods': ['GET'],
+            'template': None,
+            'defaults': None,
+            'logic': lambda: str(Task_Manager.run_task('add'))
         },
     },
     'tasks': { # Async tasks available to the Task_Manager [celery] to schedule or run
@@ -52,10 +46,10 @@ sample_config = {
             'depends_on': 'add' # Return value substituted for `res`
         },
         'call_api': {   # API Call Task
-            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True, retry_ms=3000, num_retries=5),
+            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True, retry_ms=5000, num_retries=20),
         },
         'scheduled_call': {
-            'logic': lambda: run_calls(),
+            'logic': lambda: Task_Manager.parallelize([['call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}]] for x in range(20)]),
             'schedule': {'hour': 1}
         }
     }
