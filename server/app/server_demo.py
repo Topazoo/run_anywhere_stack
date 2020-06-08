@@ -15,7 +15,7 @@ sample_config = {
             'methods': ['GET'],
             'template': None,
             'defaults': None,
-            'logic': lambda: str(Task_Manager.parallelize([['call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}]] for x in range(1000)], cache_as='scheduled_call')),
+            'logic': lambda: str(Task_Manager.run_task('scheduled_call')),
         },
         '/': {  # Route that fetches the last result of an async task (API call)
             'name': 'call_cached',
@@ -46,10 +46,10 @@ sample_config = {
             'depends_on': 'add' # Return value substituted for `res`
         },
         'call_api': {   # API Call Task
-            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True, retry_ms=5000, num_retries=20),
+            'logic': lambda url, params=None: API.get_json(url, params, ignore_errors=True, retry_ms=1000, num_retries=5),
         },
         'scheduled_call': {
-            'logic': lambda: Task_Manager.parallelize([['call_api', ['http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json', {'item': x}]] for x in range(20)]),
+            'logic': lambda: Task_Manager.parallelize([['call_api', [f'http://dummy.restapiexample.com/api/v1/employee/{x}']] for x in range(1,33)]),
             'schedule': {'hour': 1}
         }
     }

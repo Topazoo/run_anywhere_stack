@@ -1,6 +1,7 @@
-dead-simple-framework>=0.3.1
+dead-simple-framework>=0.3.3
 flask-cors==3.0.8
 requests==2.23.0
 redis==3.5.2
 eventlet==0.25.2
 celery==4.4.3
+pyOpenSSL==19.1.0
