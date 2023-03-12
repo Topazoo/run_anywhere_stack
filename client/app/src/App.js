@@ -4,16 +4,14 @@ import * as _ from 'lodash';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-
-//import Footer from './components/footer.js';
 import Header from './components/Header';
-// import LoginForm from './components/forms/login_form.js';
+import Home from './components/Home';
+import Navbar from './components/Navbar.js';
+import Footer from './components/Footer';
+import LoginSignup from './components/LoginSignup';
 // import PasswordResetForm from './components/forms/password_reset_form.js';
-// import SignUpForm from './components/forms/signup_form.js';
 // import FourOhFour from './components/fourohfour.js';
-// import Navbar from './components/navbar.js';
-// import AdminRoute from './components/routes/admin_route.js';
-// import PrivateRoute from './components/routes/private_route.js';
+import PrivateRoute from './components/routes/private_route.js';
 
 import { AuthContext } from './context/auth_context.js';
 import {
@@ -64,19 +62,14 @@ function App() {
     return (
         <div className="app">
             <Header></Header>
-            {/* <Navbar></Navbar>
+            <Navbar></Navbar>
             <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/join" component={SignUp} />
-                <Route exact path="/reset_password" component={PasswordReset}/>
+                <Route exact path="/login" component={LoginSignup} />
                 <PrivateRoute exact path="/home" component={Home} />
-                <AdminRoute exact path ="/config" component={Config} />
-                
-                <Route exact path="/404" component={FourOhFour} />
-                <Redirect exact path="/" to="/forum" />
+                <Redirect exact path="/" to="/home" />
                 <Redirect to="/404" />
             </Switch>
-            <Footer></Footer> */}
+            <Footer></Footer> 
         </div>
     );
 }

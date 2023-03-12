@@ -4,10 +4,10 @@ import { refreshTokenManager } from './auth_utils.js';
 
 export const AuthContext = createContext();
 
-const initialState = JSON.parse(localStorage.getItem('reclaim_user')) || {};
+const initialState = JSON.parse(localStorage.getItem('_application_user')) || {};
 
 const authReducer = (state, action) => {
-    const id_key = 'reclaim_user';
+    const id_key = '_application_user';
     Object.freeze(state);
     let newState = Object.assign({}, state);
     switch (action.type) {
@@ -38,7 +38,7 @@ export const AuthContextProvider = (props) => {
     useEffect(() => {
         // Check for token expiration after page refresh
         refreshTokenManager(auth, dispatch, { url: null });
-    }, [auth]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ auth, authDispatch: dispatch }}>

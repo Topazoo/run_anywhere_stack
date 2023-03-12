@@ -4,18 +4,15 @@ import { HashRouter } from 'react-router-dom';
 
 import App from './App';
 import { AuthContextProvider } from './context/auth_context';
-import { UsersContextProvider } from './context/users_context';
 import './index.css';
 
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <HashRouter>
-        <UsersContextProvider>
-            <AuthContextProvider>
-                <App />
-            </AuthContextProvider>
-        </UsersContextProvider>
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
     </HashRouter>,
     document.getElementById('root'),
 );

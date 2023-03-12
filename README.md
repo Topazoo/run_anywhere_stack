@@ -90,3 +90,7 @@ Visit [http://localhost/](http://localhost/)
 # API Documentation Collection
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/8610254-379e4614-3297-40e1-924c-e34cb9e677bb?action=collection%2Ffork&collection-url=entityId%3D8610254-379e4614-3297-40e1-924c-e34cb9e677bb%26entityType%3Dcollection%26workspaceId%3Ddb930828-a68a-4dc0-8e82-c763986bd6eb)
+
+### Acknowledgments
+
+Many thanks to [Dean](https://github.com/deanmayne) who wrote much of the React code that made it into the early commits of this project.
