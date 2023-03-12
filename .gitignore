@@ -1,6 +1,20 @@
-server/venv/
-.vscode/
-*.pyc
+# Python
+.pyc
+__pycache__
+venv/
+
+# VSCode
+.vscode
+
+# Secrets
+.env*
+compose/prod
+.elasticbeanstalk
+
+# React
+.eslintcache
 .DS_Store
-celerybeat-schedule
-dump.rdb
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!deploy/.elasticbeanstalk/config.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,0 +1,75 @@
+{
+    "name": "app-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-solid-svg-icons": "^5.15.4",
+        "@fortawesome/react-fontawesome": "^0.1.15",
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^11.2.7",
+        "@testing-library/user-event": "^12.1.10",
+        "@trivago/prettier-plugin-sort-imports": "^2.0.4",
+        "autoprefixer": "^10.4.2",
+        "axios": "^0.21.3",
+        "bootstrap": "^4.6.0",
+        "final-form": "^4.20.7",
+        "formik": "^2.2.9",
+        "moment": "^2.29.1",
+        "prettier": "^2.4.0",
+        "react": "^17.0.1",
+        "react-bootstrap": "^1.6.1",
+        "react-dom": "^17.0.1",
+        "react-final-form": "^6.5.9",
+        "react-pusher": "^0.2.0",
+        "react-router-dom": "^5.3.0",
+        "react-scripts": "4.0.3",
+        "react-select": "^4.3.1",
+        "react-tippy": "^1.4.0",
+        "web-vitals": "^0.2.4",
+        "yup": "^0.32.9"
+    },
+    "scripts": {
+        "preinstall": "git config core.hooksPath client/app/hooks",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "prettier": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "semi": true,
+        "bracketSpacing": true,
+        "importOrder": [
+            "^@core/(.*)$",
+            "^@server/(.*)$",
+            "^@ui/(.*)$",
+            "^[./]"
+        ],
+        "importOrderSeparation": true,
+        "experimentalBabelParserPluginsList": [
+            "jsx"
+        ]
+    }
+}

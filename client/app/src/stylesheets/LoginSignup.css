@@ -1,0 +1,68 @@
+.login-signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #f2f2f2;
+    min-height: 100vh;
+    padding-top: 50px;
+  }
+  
+  .slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+  
+  .toggle.active {
+    background-color: #2980b9;
+    color: #fff;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .login-form input,
+  .signup-form input {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .login-form button,
+  .signup-form button {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    width: 100%;
+  }

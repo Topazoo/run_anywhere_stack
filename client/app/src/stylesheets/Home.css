@@ -1,0 +1,9 @@
+.home-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f2f2f2;
+    padding-top: 10px;
+  }
+  

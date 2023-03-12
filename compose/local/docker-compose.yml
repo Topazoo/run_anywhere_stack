@@ -1,0 +1,89 @@
+version: "3"
+services:
+  server:
+    restart: unless-stopped
+    build:
+      context: ../../server
+    ports:
+      - "5000:5000"
+    environment:
+      # App
+      APP_ENV: "development"
+      APP_PORT: 5000
+      APP_ENABLE_CORS: 'True'
+
+      # JSON Web Token
+      APP_USE_JWT: '${APP_USE_JWT-True}'
+      APP_JWT_LIFESPAN: ${APP_JWT_LIFESPAN-1800}
+      JWT_COOKIE_SAMESITE: ${JWT_COOKIE_SAMESITE-lax}
+      JWT_COOKIE_SECURE: ${JWT_COOKIE_SECURE-false}
+
+      # Slack
+      USE_SLACK: ${USE_SLACK-False}
+      APP_SLACK_TOKEN: ${APP_SLACK_TOKEN}
+
+      # Sentry
+      USE_SENTRY: ${USE_SENTRY-False}
+      APP_SENTRY_HOST: ${APP_SENTRY_HOST}
+      APP_SENTRY_SLUG: ${APP_SENTRY_SLUG}
+
+      # Mongo
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_HOST: ${MONGODB_HOST-mongodb}
+      MONGODB_ATLAS: ${MONGODB_ATLAS}
+
+      # Email
+      APP_DOMAIN: ${APP_DOMAIN-localhost}
+      SENDER_EMAIL_ADDRESS: ${SENDER_EMAIL_ADDRESS}
+      GMAIL_OAUTH_PROJECT_ID: ${GMAIL_OAUTH_PROJECT_ID}
+      GMAIL_OAUTH_PRIVATE_KEY: ${GMAIL_OAUTH_PRIVATE_KEY}
+      GMAIL_OAUTH_PRIVATE_KEY_ID: ${GMAIL_OAUTH_PRIVATE_KEY_ID}
+      GMAIL_OAUTH_CLIENT_EMAIL: ${GMAIL_OAUTH_CLIENT_EMAIL}
+      GMAIL_OAUTH_CLIENT_ID: ${GMAIL_OAUTH_CLIENT_ID}
+      GMAIL_OAUTH_CLIENT_X509_CERT_URL: ${GMAIL_OAUTH_CLIENT_X509_CERT_URL}
+
+      # RabbitMQ
+      USE_TASKS: "false"
+      # Redis
+      USE_REDIS: "false"
+    depends_on:
+      - mongodb
+    volumes: ["../../server/app:/app"]
+    command:
+      [
+        "gunicorn",
+        "main:gunicorn",
+        "-w 2",
+        "-b 0.0.0.0:5000",
+        "-t 60",
+        "--reload",
+      ]
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ../../client
+    environment:
+      # Enable polling
+      CHOKIDAR_USEPOLLING: "true"
+      REACT_APP_API_URL: ${REACT_APP_API_URL-http://0.0.0.0:5000/}
+    ports:
+      - "80:${FRONTEND_PORT-3000}"
+      - "443:443"
+    networks:
+      - frontend_bridge
+    volumes: ["../../client/app:/app"]
+
+  mongodb:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+
+networks:
+  frontend_bridge:
+    driver: bridge

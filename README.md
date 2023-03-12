@@ -1,47 +1,96 @@
-# Run Anywhere Stack
+# Building the App
 
-## Overview:
-
-A Dockerized stack for scalable web and native mobile applications:
-
-Backend:
-
-[dead_simple_framework](https://github.com/Topazoo/dead_simple_framework): Flask + MongoDB + Celery
+- Ensure [Docker](https://docs.docker.com/get-docker/) is installed on your machine
+- Ensure [Python3](https://www.python.org/downloads/) is installed on your machine
+- Ensure [NodeJS + NPM](https://nodejs.org/en/download/) is installed on your machine
 
 
-Frontend:
+## Backend + Frontend
 
-[flexible_frontend](https://github.com/Topazoo/flutter_web_frontend) : Web + iOS Native + Android Native
-
-## Running the application client and server:
-
-1. Pull the code:
+### Build the application
 
 ```sh
-git clone https://github.com/Topazoo/run_anywhere_stack.git
-```
-
-2. Build the server, client and job scheduler:
-
-```sh
-$ cd run_anywhere_stack
+$ npm install --prefix ./client/app --legacy-peer-deps
+$ cd compose/local
 $ docker-compose build --no-cache
 ```
 
-3. Run the server, client and job scheduler:
+### Create a `.env` file in `compose/local`
+With the contents:
+```env
+REACT_APP_API_URL=http://localhost:5000/
+MONGODB_ATLAS=False
+APP_USE_JWT=True
+USE_SLACK=False
+USE_SENTRY=False
+APP_JWT_LIFESPAN=1800
+```
+An up-to-date version can be found in the #dev-credentials Slack channel
+
+## Backend
+
+### Build the application
 
 ```sh
+$ cd compose/local
+$ docker-compose build server
+```
+
+## Frontend
+
+### Build the application
+
+```sh
+$ npm install --prefix ./client/app --legacy-peer-deps
+$ cd compose/local
+$ docker-compose build frontend
+```
+
+# Running
+
+## Backend + Frontend
+
+```sh
+$ cd compose/local
 $ docker-compose up --force-recreate
 ```
 
-## Current Demo:
+Visit [http://localhost/](http://localhost/)
 
-- An auto-configured [backend](https://github.com/Topazoo/web-stack/blob/master/server/app/server_demo.py) that:
-  - Runs a chain of celery tasks (simple addition then a MongoDB insert to the `insert` collection every 60 seconds)
-  - Supports CRUD operations [GET, POST, PUT, DELETE] on `/demo` and `/insert`
-  - Fires a Celery task on `/`
-  - Returns a cached task result on `/api/fetch`
+## Backend Only
 
-- A fully platform-agnostic [frontend](https://github.com/Topazoo/flexible_frontend/blob/master/app/lib/main.dart) that:
-  - Calls `/insert` to retreive the data in the `insert` collection and renders in a scrollable list
-  
+```sh
+$ cd compose/local
+$ docker-compose up --force-recreate server
+```
+
+## Frontend Only
+
+```sh
+$ cd compose/local
+$ docker-compose up --force-recreate frontend
+```
+
+Visit [http://localhost/](http://localhost/)
+
+# Running Server-Side Scripts
+
+## Create an initial Admin user
+
+1. Start the server using `docker-compose`
+2. Run:
+    ```sh
+    $ docker exec -it local_server_1 scripts/create_initial_admin.py
+    ```
+3. An Admin user will be created with the following credentials:
+    - email: admin@application.org
+    - username: admin@application.org
+    - password: Password
+
+# API Documentation Collection
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/8610254-379e4614-3297-40e1-924c-e34cb9e677bb?action=collection%2Ffork&collection-url=entityId%3D8610254-379e4614-3297-40e1-924c-e34cb9e677bb%26entityType%3Dcollection%26workspaceId%3Ddb930828-a68a-4dc0-8e82-c763986bd6eb)
+
+### Acknowledgments
+
+Many thanks to [Dean](https://github.com/deanmayne) who wrote much of the React code that made it into the early commits of this project.

@@ -1,0 +1,24 @@
+.header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #2980b9, #2c3e50);
+    color: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 15px;
+  }
+  
+  .header-title {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .header-subtitle {
+    font-size: 1.5rem;
+    margin: 0;
+    margin-top: 10px;
+  }
+  
