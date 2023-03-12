@@ -61,20 +61,20 @@ services:
         "--reload",
       ]
 
-  # frontend:
-  #   restart: unless-stopped
-  #   build:
-  #     context: ../../client
-  #   environment:
-  #     # Enable polling
-  #     CHOKIDAR_USEPOLLING: "true"
-  #     REACT_APP_API_URL: ${REACT_APP_API_URL-http://0.0.0.0:5000/}
-  #   ports:
-  #     - "80:${FRONTEND_PORT-3000}"
-  #     - "443:443"
-  #   networks:
-  #     - frontend_bridge
-  #   volumes: ["../../client/app:/app"]
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ../../client
+    environment:
+      # Enable polling
+      CHOKIDAR_USEPOLLING: "true"
+      REACT_APP_API_URL: ${REACT_APP_API_URL-http://0.0.0.0:5000/}
+    ports:
+      - "80:${FRONTEND_PORT-3000}"
+      - "443:443"
+    networks:
+      - frontend_bridge
+    volumes: ["../../client/app:/app"]
 
   mongodb:
     image: mongo:latest
