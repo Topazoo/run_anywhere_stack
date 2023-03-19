@@ -10,7 +10,7 @@
 ### Build the application
 
 ```sh
-$ npm install --prefix ./client/app --legacy-peer-deps
+$ npm install --prefix ./client/app
 $ cd compose/local
 $ docker-compose build --no-cache
 ```
@@ -40,7 +40,7 @@ $ docker-compose build server
 ### Build the application
 
 ```sh
-$ npm install --prefix ./client/app --legacy-peer-deps
+$ npm install --prefix ./client/app
 $ cd compose/local
 $ docker-compose build frontend
 ```
