@@ -1,31 +1,32 @@
 .login-signup-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #f2f2f2;
-    min-height: 100vh;
-    padding-top: 50px;
-  }
-  
-  .slider {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
   
   .toggle {
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem 1rem;
     margin-right: 1rem;
-    background-color: #fff;
+    border-color: #fda085;
     border-radius: 20px;
+    border-style: solid;
   }
   
   .toggle.active {
-    background-color: #2980b9;
+    background-color: #fda085;
     color: #fff;
   }
   
@@ -36,13 +37,23 @@
   }
   
   .form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
     justify-content: center;
     align-items: center;
     background-color: #fff;
     border-radius: 20px;
     padding: 2rem;
+    width: 100%;
+  }
+
+  .login-form {
+    display: inline;
+  }
+  
+  .signup-form {
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .login-form input,
@@ -58,11 +69,34 @@
   .signup-form button {
     margin: 1rem 0;
     padding: 0.5rem 1rem;
-    background-color: #2980b9;
+    background-color: #fda085;
     color: #fff;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 1.2rem;
     width: 100%;
+  }
+
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-row input {
+    margin: 0;
+  }
+
+  .submit-button {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background-color: #fda085;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    width: 100%;
+    grid-column: span 2;
   }

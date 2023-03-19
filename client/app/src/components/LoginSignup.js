@@ -103,27 +103,32 @@ const LoginSignup = () => {
         </div>
         <div className="form-container">
             <form className={`form ${isLogin ? 'login-form' : 'signup-form'}`} onSubmit={isLogin ? login : signup}>
-            {isLogin ? (
+                {isLogin ? (
                 <>
-                <input type="text" name="username" placeholder="Username" />
-                <input type="password" name="password" placeholder="Password" />
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
                 </>
-            ) : (
+                ) : (
                 <>
-                <input type="text" name="username" placeholder="Username" />
-                <input type="password" name="password" placeholder="Password" />
-                <input type="text" name="firstName" placeholder="First Name" />
-                <input type="text" name="lastName" placeholder="Last Name" />
-                <input type="email" name="email" placeholder="Email" />
+                    <input type="text" name="firstName" placeholder="First Name" />
+                    <input type="text" name="lastName" placeholder="Last Name" />
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
+                    <input type="email" name="email" placeholder="Email" />
                 </>
-            )}
-            <button type="submit">{isLogin ? 'Log In' : 'Sign Up'}</button>
+                )}
+                <button
+                    type="submit"
+                    className="submit-button"
+                >
+                    {isLogin ? 'Log In' : 'Sign Up'}
+                </button>
             </form>
+            </div>
         </div>
-        </div>
-    ) : (
+        ) : (
         <Redirect to={{ pathname: '/home' }} />
     );
-};
+}
 
 export default LoginSignup;
