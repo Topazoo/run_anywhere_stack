@@ -1,0 +1,92 @@
+version: '3'
+services:
+  server:
+    restart: unless-stopped
+    build:
+      context: ../../scheduler_demo
+    ports:
+      - "5000:5000"
+    environment:
+      APP_ENV: "development"
+      APP_PORT: 5000
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_HOST: ${MONGODB_HOST-mongodb}
+      MONGODB_ATLAS: ${MONGODB_ATLAS}
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      REDIS_HOST: redis
+    depends_on:
+      - mongodb
+      - scheduler
+      - rabbitmq
+      - redis
+    volumes: ["../../scheduler_demo/app:/app"]
+  
+  scheduler:
+    build:
+      context: ../../scheduler_demo
+    user: nobody
+    environment:
+      MONGODB_DEFAULT_DB: db
+      MONGODB_DEFAULT_COLLECTION: records
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_HOST: ${MONGODB_HOST-mongodb}
+      MONGODB_ATLAS: ${MONGODB_ATLAS}
+      CELERY_APP_NAME: scheduler_demo
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      REDIS_HOST: redis
+    command: celery worker -B -s /tmp/celerybeat-schedule -l info -A scheduler_demo
+    depends_on:
+      - rabbitmq
+      - redis
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
+
+  worker_pool:
+    build:
+      context: ../../scheduler_demo
+    user: nobody
+    environment:
+        MONGODB_DEFAULT_DB: db
+        MONGODB_DEFAULT_COLLECTION: records
+        MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+        MONGODB_HOST: ${MONGODB_HOST-mongodb}
+        MONGODB_ATLAS: ${MONGODB_ATLAS}
+        CELERY_APP_NAME: scheduler_demo
+        RABBITMQ_PASSWORD: guest
+        RABBITMQ_USERNAME: guest
+        RABBITMQ_HOST: rabbitmq
+        RABBITMQ_PORT: 5672
+        REDIS_HOST: redis
+    command: celery worker -l info -A scheduler_demo -P eventlet -c 1000
+    depends_on:
+        - rabbitmq
+        - redis
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
+    
+
+  mongodb:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+      
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    restart: unless-stopped
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+    restart: unless-stopped
