@@ -12,6 +12,12 @@ INDICES = Indices({
             'properties': {
                 'unique': True
             }
+        },
+        'username': {
+            'order': -1,
+            'properties': {
+                'unique': True
+            }
         }
     },
 
