@@ -25,7 +25,6 @@ USE_SLACK=False
 USE_SENTRY=False
 APP_JWT_LIFESPAN=1800
 ```
-An up-to-date version can be found in the #dev-credentials Slack channel
 
 ## Backend
 
