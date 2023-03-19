@@ -1,2 +1,2 @@
 dead-simple-framework>=1.3.2
-celery==4.4.3
+celery==5.2.2
