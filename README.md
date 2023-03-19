@@ -25,7 +25,6 @@ USE_SLACK=False
 USE_SENTRY=False
 APP_JWT_LIFESPAN=1800
 ```
-An up-to-date version can be found in the #dev-credentials Slack channel
 
 ## Backend
 
@@ -90,6 +89,11 @@ Visit [http://localhost/](http://localhost/)
 # API Documentation Collection
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/8610254-379e4614-3297-40e1-924c-e34cb9e677bb?action=collection%2Ffork&collection-url=entityId%3D8610254-379e4614-3297-40e1-924c-e34cb9e677bb%26entityType%3Dcollection%26workspaceId%3Ddb930828-a68a-4dc0-8e82-c763986bd6eb)
+
+# Task Scheduler Demo:
+
+You can find an additional demo application [scheduler_demo](https://github.com/Topazoo/run_anywhere_stack/blob/master/scheduler_demo/) with an attached README.
+This demo application demonstrates the Task Manager and task scheduling capabilities of dead-simple-framework
 
 ### Acknowledgments
 
