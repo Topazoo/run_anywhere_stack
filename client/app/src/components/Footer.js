@@ -3,9 +3,9 @@ import '../stylesheets/Footer.css';
 
 const Footer = () => {
   return (
-    <div className="footer-container">
-      <p className="footer-text">Created by Peter Swanson</p>
-    </div>
+    <footer className="footer">
+      <div className="footer-content">Your footer content here</div>
+    </footer>
   );
 };
 

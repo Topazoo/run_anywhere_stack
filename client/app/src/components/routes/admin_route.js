@@ -15,7 +15,7 @@ const AdminRoute = ({ component: Component, ...kwargs }) => {
                 ) : (
                     <Redirect
                         to={{
-                            pathname: '/forum',
+                            pathname: '/',
                             state: { from: props.location },
                         }}
                     />
