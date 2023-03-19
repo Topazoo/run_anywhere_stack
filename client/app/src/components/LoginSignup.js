@@ -68,6 +68,8 @@ const LoginSignup = () => {
                 password: userData.password,
             })
             .then((response) => {
+                delete userData.password;
+
                 const user = {...response.data, ...userData};
                 authDispatch({ type: 'LOGIN', user: user });
             })
@@ -110,16 +112,16 @@ const LoginSignup = () => {
                 </>
                 ) : (
                 <>
-                    <input type="text" name="firstName" placeholder="First Name" />
-                    <input type="text" name="lastName" placeholder="Last Name" />
-                    <input type="text" name="username" placeholder="Username" />
-                    <input type="password" name="password" placeholder="Password" />
-                    <input type="email" name="email" placeholder="Email" />
+                    <input type="text" name="firstName" placeholder="First Name" autocomplete="given-name"/>
+                    <input type="text" name="lastName" placeholder="Last Name" autocomplete="family-name"/>
+                    <input type="text" name="username" placeholder="Username" autocomplete="off"/>
+                    <input type="password" name="password" placeholder="Password" autocomplete="new-password"/>
+                    <input type="email" name="email" placeholder="Email" autocomplete="email" className='full-grid-row'/>
                 </>
                 )}
                 <button
                     type="submit"
-                    className="submit-button"
+                    className="full-grid-row"
                 >
                     {isLogin ? 'Log In' : 'Sign Up'}
                 </button>
